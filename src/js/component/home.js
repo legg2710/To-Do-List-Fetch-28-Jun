@@ -16,11 +16,34 @@ export function Home() {
 		})
 			.then(resp => resp.json())
 			.then(data => {
-				setTodos(data);
-				console.log(data);
+				agregar(data);
 			});
 	};
 
+	const todoReq = () => {
+		fetch("https://assets.breatheco.de/apis/fake/todos/user/legg2710", {
+			method: "PUT",
+
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+			.then(resp => resp.json())
+			.then(data => {
+				agregar(data);
+			});
+	};
+
+	function agregar(data) {
+		data.map(valor =>
+			setTodos([
+				...todos,
+				{
+					label: valor.label
+				}
+			])
+		);
+	}
 	function todosEliminar(index) {
 		if (index > -1) {
 			console.log("eliminar");
@@ -29,9 +52,6 @@ export function Home() {
 		}
 	}
 	///5. Ejecutamos el useEffect al final, justo antes del return, llamando la funcion que contiene el GET
-	useEffect(() => {
-		todoReq();
-	}, []);
 
 	return (
 		<div className="text-center mt-5 container">
@@ -59,7 +79,7 @@ export function Home() {
 				{todos.map((item, index) => {
 					return (
 						<li className="list-group-item" key={index}>
-							<span>{item}</span>
+							<span>{item.label}</span>
 							<button
 								className="btn btn-light float-right"
 								onClick={
