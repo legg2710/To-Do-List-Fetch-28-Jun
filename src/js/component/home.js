@@ -20,7 +20,7 @@ export function Home() {
 			});
 	};
 
-	const todoReq = () => {
+	const todoEdit = () => {
 		fetch("https://assets.breatheco.de/apis/fake/todos/user/legg2710", {
 			method: "PUT",
 
